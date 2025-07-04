@@ -892,3 +892,219 @@ If you'd like, I can also:
 
 ⚡ *Reply with "Yes, backend code next!" — and I'll drop that for you in polished, professional style. Let's make this MVP shine brighter than a merge conflict resolved on the first try!* 💥🚀
 
+
+⚡️ **Awesome — let’s tackle your backend code now, fully detailed and ready to drop in.**
+We’ll set up **two endpoints**:
+
+1️⃣ `/api/review` — main code review (full analysis).
+2️⃣ `/api/explain` — additional clarifications ("Why" feature).
+
+I’ll write everything so you can **copy → paste → run**, no guesswork.
+
+---
+
+# 🗂️ **Backend Full Code**
+
+## ✅ **Setup (Node + Express)**
+
+```bash
+mkdir backend
+cd backend
+npm init -y
+npm install express axios cors dotenv
+touch index.js .env
+```
+
+---
+
+## ✅ **`.env` file**
+
+```env
+NOTAMEDIA_API_KEY=your_notamedia_api_key_here
+```
+
+> ⚠️ Replace with your actual Notamedia API key.
+
+---
+
+## ✅ **`index.js` full code**
+
+```js
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import axios from 'axios';
+
+dotenv.config();
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+/**
+ * POST /api/review
+ * Body: { code: "..." }
+ * Response: {
+ *   issues: [...],
+ *   explanations: "...",
+ *   improvedCode: "...",
+ *   skillAssessment: "..."
+ * }
+ */
+app.post('/api/review', async (req, res) => {
+  const { code } = req.body;
+
+  if (!code) {
+    return res.status(400).json({ error: 'Code snippet is required.' });
+  }
+
+  try {
+    // Compose main prompt
+    const prompt = `
+Act as a senior software engineer. Review the following code snippet carefully.
+
+1. List concise issues and potential bugs (in a JSON array format).
+2. Provide clear explanations for each issue in simple terms.
+3. Suggest an overall improvement strategy.
+4. Finally, generate a possible improved version of the code (in one complete code block).
+5. Estimate the developer's skill level and suggest three learning topics to focus on.
+
+Code snippet:
+---
+${code}
+---
+Return your output in this JSON format:
+
+{
+  "issues": [ ... ],
+  "explanations": "...",
+  "improvedCode": "...",
+  "skillAssessment": "..."
+}
+`;
+
+    // Call Notamedia GenAI API
+    const response = await axios.post(
+      'https://api.notamedia.ai/v1/genai',
+      {
+        prompt,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NOTAMEDIA_API_KEY}`,
+        },
+      }
+    );
+
+    // Parse JSON returned by GenAI
+    let parsed;
+    try {
+      parsed = JSON.parse(response.data.choices[0].message.content);
+    } catch (err) {
+      console.error('Failed to parse AI response', err);
+      return res.status(500).json({ error: 'Invalid AI response format.' });
+    }
+
+    res.json(parsed);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch review from GenAI' });
+  }
+});
+
+/**
+ * POST /api/explain
+ * Body: { issue: "..." }
+ * Response: { explanation: "..." }
+ */
+app.post('/api/explain', async (req, res) => {
+  const { issue } = req.body;
+
+  if (!issue) {
+    return res.status(400).json({ error: 'Issue text is required.' });
+  }
+
+  try {
+    const prompt = `
+Explain in detail why this issue is a problem in code:
+
+"${issue}"
+
+Use simple language and provide a practical example fix if possible.
+`;
+
+    const response = await axios.post(
+      'https://api.notamedia.ai/v1/genai',
+      {
+        prompt,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NOTAMEDIA_API_KEY}`,
+        },
+      }
+    );
+
+    const explanation = response.data.choices[0].message.content;
+    res.json({ explanation });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch explanation from GenAI' });
+  }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Backend server running on port ${PORT}`);
+});
+```
+
+---
+
+# ✅ **Quick Explanation**
+
+### 💬 `/api/review`
+
+* Accepts your code snippet.
+* Builds a detailed structured prompt.
+* Asks Notamedia to respond in **JSON format** so it’s easy to parse.
+* Returns separate `issues`, `explanations`, `improvedCode`, and `skillAssessment`.
+
+---
+
+### 💬 `/api/explain`
+
+* Takes a specific issue text when user clicks "Why?".
+* Asks Notamedia to elaborate in detail.
+* Returns a simple explanation string.
+
+---
+
+# ⚙️ **Run it**
+
+```bash
+node index.js
+```
+
+Check on browser or frontend app:
+
+```
+http://localhost:5000
+```
+
+---
+
+# 🚀 **✅ Next: Deployment (Bonus)**
+
+If you'd like, I can also prep:
+
+* Render deploy config for backend.
+* Vercel/Netlify setup for frontend.
+* Example `vercel.json` or `render.yaml` if you want to push with one click.
+
+---
+
+## 💬 **Want me to prep deployment guides and ready files too?**
+
+Reply **"Yes, deploy guides too!"** — and I’ll wrap it up into a final "Launch Pad Kit" so you can fly past the hackathon finish line like a caffeinated eagle. 🦅💻🔥
+
+

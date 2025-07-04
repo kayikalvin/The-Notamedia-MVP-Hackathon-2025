@@ -465,6 +465,183 @@ I can also prepare for you:
 
 ---
 
+
+
+🎯 **Outstanding! Let’s finalize your prompts and wireframes today.** Here’s a detailed, structured, pro-level package for you.
+
+---
+
+# 💬 **1️⃣ Full Notamedia Prompt Templates (Copy-Ready)**
+
+## ✅ ✨ **Main Review Prompt**
+
+```
+Act as a senior software engineer. Review the following code snippet carefully.
+
+1. List concise issues and potential bugs.
+2. Provide clear explanations for each issue in simple terms that a beginner can understand.
+3. Suggest an overall improvement strategy.
+4. Finally, generate a possible improved version of the code. Include inline comments explaining each change.
+
+Code snippet:
+---
+{{user_code}}
+---
+```
+
+---
+
+## ✅ 💡 **"Why" Clarification Prompt**
+
+```
+Explain in detail why this specific issue is a problem in code:
+
+"{{clicked_issue}}"
+
+Use simple language. If possible, give a practical example of how to fix or improve it.
+```
+
+---
+
+## ✅ 🎓 **Skill Assessment & Learning Path Prompt**
+
+```
+Based on this code snippet and its issues, estimate the developer's skill level (Beginner, Intermediate, or Advanced).
+
+Then suggest three learning topics or areas they should focus on next to improve their skills.
+
+Code snippet:
+---
+{{user_code}}
+---
+```
+
+---
+
+## ✅ 🛠️ **Improved Code-Only Prompt (Optional — if you want a separate "improve only" endpoint)**
+
+```
+Rewrite the following code snippet to improve quality and readability. Fix any potential bugs and include inline comments explaining the important changes.
+
+Code snippet:
+---
+{{user_code}}
+---
+```
+
+---
+
+### 🟢 **Notes for prompts**
+
+* The `{{user_code}}` placeholder is where you'll inject the pasted code in your backend.
+* Always explicitly instruct the model to use simple terms if you want beginner-friendly feedback.
+* Mark sections with titles or "## Section Name" if you want to split responses easily on frontend.
+
+---
+
+# 🧑‍🎨 **2️⃣ Wireframe / UI Flow Sketch**
+
+I’ve designed this as a clear flow that maximizes "wow" moments in your demo.
+
+---
+
+## 💻 **Main Page Layout**
+
+```
++------------------------------------------------+
+|           CodeSensei - AI Code Reviewer        |
++------------------------------------------------+
+| [Code Editor (Monaco)]                         |
+|                                                |
+| [ Review My Code Button ]                      |
++------------------------------------------------+
+| [ AI Review Panel ]                            |
+|   - Issues (clickable)                         |
+|   - Simple Explanations                        |
+|   - Improved Code (copy button)                |
+|   - Skill Level & Learning Suggestions         |
++------------------------------------------------+
+```
+
+---
+
+## 🔥 **Click Flow**
+
+```
+[Click on Issue] → [Show modal with "Why" explanation] → [User closes modal]
+```
+
+---
+
+## ✅ **Key Elements**
+
+* **Code Editor**: Monaco (VS Code-like).
+
+* **Action Button**: Primary CTA to trigger review.
+
+* **AI Review Panel**:
+
+  * Issues (render as a clickable list).
+  * Explanations (render separately).
+  * Improved Code (block + "Copy" button).
+  * Learning suggestions (highlighted as a card or banner).
+
+* **Loading state**: Spinners or "AI thinking..." animations.
+
+* **Error states**: Friendly messages.
+
+---
+
+## 🎨 **Color & Visual Style Suggestion**
+
+* Dark code editor theme (vs-dark).
+* Clean, light UI background to keep focus on results.
+* Tailwind colors: Blue accents (`blue-600`), green for success (`green-500`), yellow for warnings (`yellow-500`).
+
+---
+
+# 🗂️ **3️⃣ Suggested Folder / Component Structure**
+
+```
+frontend/
+├── src/
+│   ├── components/
+│   │   ├── CodeEditor.jsx
+│   │   ├── ReviewPanel.jsx
+│   │   ├── IssuesList.jsx
+│   │   ├── ExplanationModal.jsx
+│   │   └── SkillCard.jsx
+│   ├── pages/
+│   │   └── Home.jsx
+│   ├── App.jsx
+│   └── main.jsx
+```
+
+---
+
+## ✅ **Component Explanations**
+
+* `CodeEditor.jsx`: Monaco editor wrapper.
+* `ReviewPanel.jsx`: Main container for AI feedback sections.
+* `IssuesList.jsx`: Renders clickable issues.
+* `ExplanationModal.jsx`: Modal for "Why" details.
+* `SkillCard.jsx`: Skill level and learning suggestions.
+
+---
+
+# 💥 **4️⃣ Next Step: Build Out Starter Code**
+
+If you'd like, I can also prepare **starter code files for each component**, ready to drop into your repo, including Tailwind classes and handlers.
+
+---
+
+## 🚀 ✅ *Shall I generate those starter code files for you as a next step?*
+
+Say **"Yes, create starter code for components"**, and I’ll send you each file in one big bundle — so you can copy-paste, run `npm install`, and fly.
+
+*We’re building this faster than a keyboard warrior on energy drinks!* 💻⚡🔥
+
+
 ## 💥 **Next step: Shall I draft the full Notamedia prompt templates and wireframes for you right now?**
 
 Reply *"Yes, let’s finalize prompts and wireframes"* — and we’ll get you moving like a rocket on Red Bull. 🚀👨‍💻
